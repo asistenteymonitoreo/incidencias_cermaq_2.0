@@ -325,9 +325,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const riesgoPeces = document.querySelector('input[name="riesgoPeces"]:checked')?.value === 'si';
         const perdidaEconomica = document.querySelector('input[name="perdidaEconomica"]:checked')?.value === 'si';
         const riesgoPersonas = document.querySelector('input[name="riesgoPersonas"]:checked')?.value === 'si';
+
+        // Formatear fecha y hora para Django
+        const fechaHoraInput = document.getElementById('fechaHora').value;
+        const fechaHoraFormateada = fechaHoraInput ? fechaHoraInput + ':00' : null;
         
         const data = {
-            fecha_hora: document.getElementById('fechaHora').value,
+            fecha_hora: fechaHoraFormateada,
             turno: document.getElementById('turno').value,
             centro: document.getElementById('centro').value || null,
             tipo_incidencia: document.querySelector('input[name="tipoIncidencia"]:checked')?.value || '',

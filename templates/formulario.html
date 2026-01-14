@@ -44,7 +44,7 @@
                         <select id="centro" name="centro" required>
                             <option value="">Seleccione un centro</option>
                             {% for c in centros %}
-                                <option value="{{ c.id }}" {% if incidencia_a_editar.centro_id == c.id %}selected{% endif %}>
+                                <option value="{{ c.slug }}" {% if incidencia_a_editar.centro.slug == c.slug %}selected{% endif %}>
                                     {{ c.nombre }}
                                 </option>
                             {% endfor %}

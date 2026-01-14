@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cermaq_incidencias',
         'USER': 'root',
-        'PASSWORD': '',  # XAMPP usa contraseña vacía por defecto
+        'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
