@@ -362,9 +362,52 @@ h1 {
     box-shadow: 0 5px 15px rgba(0, 102, 102, 0.4);
 }
 
+/* Botón Azul - Captura Completa */
+.sidebar-actions .action-primary-blue {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.sidebar-actions .action-primary-blue:hover {
+    background: linear-gradient(135deg, #2980b9, #1f618d);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Botón Verde - PDF Resumido */
+.sidebar-actions .action-primary-green {
+    background: linear-gradient(135deg, #27ae60, #229954);
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+}
+
+.sidebar-actions .action-primary-green:hover {
+    background: linear-gradient(135deg, #229954, #1e8449);
+    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Botón Naranja - Resumen Centros */
+.sidebar-actions .action-primary-orange {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+}
+
+.sidebar-actions .action-primary-orange:hover {
+    background: linear-gradient(135deg, #d35400, #a04000);
+    box-shadow: 0 6px 20px rgba(230, 126, 34, 0.5);
+    transform: translateY(-2px);
+}
+
 /* Botón especial Power BI */
 .power-bi-btn {
     background: linear-gradient(135deg, #f39c12, #e67e22) !important;
+    color: white;
     color: white !important;
     font-weight: bold;
     box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
