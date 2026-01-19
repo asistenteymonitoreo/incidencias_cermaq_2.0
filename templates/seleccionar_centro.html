@@ -1,31 +1,47 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seleccionar Centro - Reporte de Incidencias</title>
     <link rel="stylesheet" href="{% static 'css/formulario.css' %}">
     <link rel="icon" type="image/png" href="{% static 'imagenes/logo-pestaña.png' %}">
-    
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0056b3">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
+
     <style>
         /* Estilos simples para centrar la selección */
         body {
-            background-color: #f0f2f5; /* Un fondo suave */
+            background-color: #f0f2f5;
+            /* Un fondo suave */
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
             position: relative;
         }
+
         .logout-btn-top {
             position: absolute;
             top: 20px;
             right: 20px;
         }
+
         .logout-btn-top form {
             margin: 0;
         }
+
         .logout-btn-top button {
             padding: 10px 20px;
             background: #e74c3c;
@@ -37,22 +53,26 @@
             font-size: 0.95em;
             transition: background-color 0.3s ease;
         }
+
         .logout-btn-top button:hover {
             background: #c0392b;
         }
+
         .selector-container {
             max-width: 600px;
             width: 100%;
             padding: 40px;
             background-color: #ffffff;
             border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+
         .selector-container h1 {
             color: #333;
             margin-bottom: 30px;
         }
+
         .selector-button {
             display: block;
             width: 100%;
@@ -65,29 +85,41 @@
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            text-decoration: none; /* Para que los <a> se vean como botones */
-            box-sizing: border-box; /* Asegura padding correcto */
+            text-decoration: none;
+            /* Para que los <a> se vean como botones */
+            box-sizing: border-box;
+            /* Asegura padding correcto */
         }
+
         .btn-pcc {
-            background-color: #0056b3; /* Azul corporativo */
+            background-color: #0056b3;
+            /* Azul corporativo */
         }
+
         .btn-pcc:hover {
             background-color: #004494;
         }
+
         .btn-sj {
-            background-color: #28a745; /* Verde para Santa Juana */
+            background-color: #28a745;
+            /* Verde para Santa Juana */
         }
+
         .btn-sj:hover {
             background-color: #218838;
         }
+
         .btn-camaras {
-            background-color: #17a2b8; /* Azul turquesa para Cámaras */
+            background-color: #17a2b8;
+            /* Azul turquesa para Cámaras */
         }
+
         .btn-camaras:hover {
             background-color: #138496;
         }
     </style>
 </head>
+
 <body>
     <!-- Botón de cerrar sesión -->
     <div class="logout-btn-top">
@@ -96,21 +128,22 @@
             <button type="submit">🔒 Cerrar Sesión</button>
         </form>
     </div>
-    
+
     <div class="selector-container">
         <h1>Seleccione el Centro para Registrar Incidencia</h1>
-        
+
         <a href="{% url 'formulario_pcc' %}" class="selector-button btn-pcc">
             Formulario PCC (Trafun, Liquiñe, etc.)
         </a>
-        
+
         <a href="{% url 'formulario_santa_juana' %}" class="selector-button btn-sj">
             Formulario Santa Juana
         </a>
-        
+
         <a href="{% url 'reporte_camaras' %}" class="selector-button btn-camaras">
             Reporte de Cámaras
         </a>
     </div>
 </body>
+
 </html>
