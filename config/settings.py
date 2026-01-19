@@ -27,12 +27,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0*sy6%4^a33%v$5@*&(wtnd-e()d$am^yx+!^hipg0!xer(tx4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'web-production-a753e.up.railway.app']
 
-# Permitir acceso desde browser preview
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8001', 'http://localhost:8001', 'http://127.0.0.1:62590']
+# Permitir acceso desde orígenes de confianza (Railway y local)
+CSRF_TRUSTED_ORIGINS = [
+    'https://web-production-a753e.up.railway.app',
+    'https://*.up.railway.app',
+    'http://127.0.0.1:8000',
+    'http://localhost:8000'
+]
 
 
 # Application definition
