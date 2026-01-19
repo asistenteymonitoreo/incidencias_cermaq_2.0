@@ -965,3 +965,87 @@ def eliminar_reporte_camaras_api(request, pk):
             'success': False,
             'message': str(e)
         }, status=status.HTTP_400_BAD_REQUEST)
+
+
+# --- EXPORTAR INCIDENCIAS A CSV ---
+@login_required
+def exportar_incidencias_csv(request):
+    """
+    Exporta todas las incidencias a un archivo CSV
+    """
+    import csv
+    from django.http import HttpResponse
+    from datetime import datetime
+    
+    # Crear la respuesta HTTP con el tipo de contenido CSV
+    response = HttpResponse(content_type='text/csv; charset=utf-8')
+    response['Content-Disposition'] = f'attachment; filename="incidencias_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv"'
+    
+    # Crear el escritor CSV
+    writer = csv.writer(response)
+    
+    # Escribir encabezados
+    writer.writerow([
+        'ID',
+        'Fecha y Hora',
+        'Turno',
+        'Centro',
+        'Tipo Incidencia',
+        'Módulo',
+        'Estanque',
+        'Parámetros Afectados',
+        'Oxígeno Nivel',
+        'Oxígeno Valor',
+        'Temperatura Nivel',
+        'Temperatura Valor',
+        'Conductividad Nivel',
+        'Turbidez Nivel',
+        'Turbidez Valor',
+        'Sistema Sensor',
+        'Sensor Detectado',
+        'Sensor Nivel',
+        'Sensor Valor',
+        'Tiempo Resolución (min)',
+        'Riesgo Peces',
+        'Pérdida Económica',
+        'Riesgo Personas',
+        'Observación',
+        'Operario Contacto',
+        'Tipo Normalizado'
+    ])
+    
+    # Obtener todas las incidencias
+    incidencias = Incidencia.objects.select_related('centro', 'operario_contacto').all().order_by('-fecha_hora')
+    
+    # Escribir datos
+    for inc in incidencias:
+        writer.writerow([
+            inc.id,
+            inc.fecha_hora.strftime('%Y-%m-%d %H:%M:%S') if inc.fecha_hora else '',
+            inc.turno,
+            inc.centro.nombre if inc.centro else '',
+            inc.tipo_incidencia,
+            inc.modulo,
+            inc.estanque,
+            inc.parametros_afectados,
+            inc.oxigeno_nivel,
+            inc.oxigeno_valor,
+            inc.temperatura_nivel,
+            inc.temperatura_valor,
+            inc.conductividad_nivel,
+            inc.turbidez_nivel,
+            inc.turbidez_valor,
+            inc.sistema_sensor,
+            inc.sensor_detectado,
+            inc.sensor_nivel,
+            inc.sensor_valor,
+            inc.tiempo_resolucion if inc.tiempo_resolucion else '',
+            'Sí' if inc.riesgo_peces else 'No',
+            'Sí' if inc.perdida_economica else 'No',
+            'Sí' if inc.riesgo_personas else 'No',
+            inc.observacion,
+            inc.operario_contacto.nombre if inc.operario_contacto else '',
+            inc.tipo_incidencia_normalizada
+        ])
+    
+    return response

@@ -3,8 +3,16 @@
 {% block title %}Análisis de Incidencias{% endblock %}
 
 {% block content %}
-<h1>🔍 Análisis de Incidencias</h1>
-<p class="dashboard-subtitle">Profundización en problemas operacionales</p>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <div>
+        <h1>🔍 Análisis de Incidencias</h1>
+        <p class="dashboard-subtitle">Profundización en problemas operacionales</p>
+    </div>
+    <a href="{% url 'exportar_incidencias_csv' %}" class="btn" style="background: #28a745; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-weight: 500;">
+        <span>📥</span>
+        <span>Exportar a CSV</span>
+    </a>
+</div>
 
 <section class="metrics-grid">
     <div class="metric-card">
