@@ -1,72 +1,95 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Incidencias - Cermaq Chile</title>
     <link rel="stylesheet" href="{% static 'css/formulario.css' %}">
     <link rel="icon" type="image/logo-pestaña.png" href="{% static 'imagenes/logo-pestaña.png' %}">
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0056b3">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
 </head>
+
 <body>
     <div class="page-layout">
         <div class="form-container">
-            
-            <img src="{% static 'imagenes/logo-reporte-cermaq.png' %}" alt="Logo Reporte de Incidencias CERMAQ" class="form-logo">
 
-            <h1>{% if incidencia_a_editar %}Editar Incidencia{% else %}Formulario de Registro de Incidencias{% endif %}</h1>
+            <img src="{% static 'imagenes/logo-reporte-cermaq.png' %}" alt="Logo Reporte de Incidencias CERMAQ"
+                class="form-logo">
+
+            <h1>{% if incidencia_a_editar %}Editar Incidencia{% else %}Formulario de Registro de Incidencias{% endif %}
+            </h1>
 
             <form id="incidenciaForm" data-incidencia-id="{{ incidencia_a_editar.pk|default:'' }}">
-                
-                {% csrf_token %} 
-                
-                <section class="form-section {% if incidencia_a_editar %}form-section-visible{% endif %}" id="section-info-basica">
+
+                {% csrf_token %}
+
+                <section class="form-section {% if incidencia_a_editar %}form-section-visible{% endif %}"
+                    id="section-info-basica">
                     <h2>1. Información Básica del Reporte</h2>
-                    
+
                     <div class="form-group">
                         <label for="fechaHora">Fecha y Hora:</label>
-                        <input type="datetime-local" id="fechaHora" name="fechaHora" 
-                               value="{{ incidencia_a_editar.fecha_hora|date:'Y-m-d\TH:i' }}" required>
+                        <input type="datetime-local" id="fechaHora" name="fechaHora"
+                            value="{{ incidencia_a_editar.fecha_hora|date:'Y-m-d\TH:i' }}" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="turno">Turno:</label>
                         <select id="turno" name="turno" required>
                             <option value="">Seleccione un turno</option>
-                            <option value="Mañana" {% if incidencia_a_editar.turno == 'Mañana' %}selected{% endif %}>Mañana</option>
-                            <option value="Tarde" {% if incidencia_a_editar.turno == 'Tarde' %}selected{% endif %}>Tarde</option>
-                            <option value="Noche" {% if incidencia_a_editar.turno == 'Noche' %}selected{% endif %}>Noche</option>
+                            <option value="Mañana" {% if incidencia_a_editar.turno=='Mañana' %}selected{% endif %}>
+                                Mañana</option>
+                            <option value="Tarde" {% if incidencia_a_editar.turno=='Tarde' %}selected{% endif %}>Tarde
+                            </option>
+                            <option value="Noche" {% if incidencia_a_editar.turno=='Noche' %}selected{% endif %}>Noche
+                            </option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="centro">Centro:</label>
                         <select id="centro" name="centro" required>
                             <option value="">Seleccione un centro</option>
                             {% for c in centros %}
-                                <option value="{{ c.slug }}" {% if incidencia_a_editar.centro.slug == c.slug %}selected{% endif %}>
-                                    {{ c.nombre }}
-                                </option>
+                            <option value="{{ c.slug }}" {% if incidencia_a_editar.centro.slug==c.slug %}selected{%
+                                endif %}>
+                                {{ c.nombre }}
+                            </option>
                             {% endfor %}
                         </select>
                     </div>
                 </section>
 
-                <section class="form-section {% if not incidencia_a_editar %}hidden{% endif %}" id="section-tipo-incidencia">
+                <section class="form-section {% if not incidencia_a_editar %}hidden{% endif %}"
+                    id="section-tipo-incidencia">
                     <h2>2. Tipo de Incidencia</h2>
                     <div class="form-group-radio">
-                        <input type="radio" id="tipoModulos" name="tipoIncidencia" value="modulos" 
-                               {% if incidencia_a_editar.tipo_incidencia == 'modulos' %}checked{% endif %}>
+                        <input type="radio" id="tipoModulos" name="tipoIncidencia" value="modulos" {% if
+                            incidencia_a_editar.tipo_incidencia=='modulos' %}checked{% endif %}>
                         <label for="tipoModulos">Parámetros de Módulos y Estanques</label>
                     </div>
                     <div class="form-group-radio">
-                        <input type="radio" id="tipoSensores" name="tipoIncidencia" value="sensores"
-                               {% if incidencia_a_editar.tipo_incidencia == 'sensores' %}checked{% endif %}>
+                        <input type="radio" id="tipoSensores" name="tipoIncidencia" value="sensores" {% if
+                            incidencia_a_editar.tipo_incidencia=='sensores' %}checked{% endif %}>
                         <label for="tipoSensores">Sistemas de Sensores</label>
                     </div>
                 </section>
 
-                <section class="form-section {% if not incidencia_a_editar.tipo_incidencia == 'modulos' %}hidden{% endif %}" id="section-modulos-estanques">
+                <section
+                    class="form-section {% if not incidencia_a_editar.tipo_incidencia == 'modulos' %}hidden{% endif %}"
+                    id="section-modulos-estanques">
                     <h2>3. Detalles: Módulos y Estanques</h2>
                     <div class="form-group">
                         <label for="modulo">Módulo:</label>
@@ -81,19 +104,20 @@
                         </select>
                     </div>
                     <h3>Parámetros Afectados:</h3>
-                    
+
                     <div class="form-group">
                         <input type="checkbox" id="oxigeno" name="parametros" value="oxigeno">
                         <label for="oxigeno">Oxígeno</label>
                         <label for="oxigenoNivel" class="hidden-input">Nivel de Oxígeno:</label>
                         <select id="oxigenoNivel" name="oxigenoNivel" class="hidden-input">
                             <option value="">Seleccione nivel</option>
-                            <option value="alta" {% if incidencia_a_editar.oxigeno_nivel == 'alta' %}selected{% endif %}>Alto</option>
-                            <option value="baja" {% if incidencia_a_editar.oxigeno_nivel == 'baja' %}selected{% endif %}>Bajo</option>
+                            <option value="alta" {% if incidencia_a_editar.oxigeno_nivel=='alta' %}selected{% endif %}>
+                                Alto</option>
+                            <option value="baja" {% if incidencia_a_editar.oxigeno_nivel=='baja' %}selected{% endif %}>
+                                Bajo</option>
                         </select>
-                        <input type="text" id="valorOxigeno" name="valorOxigeno" 
-                               placeholder="Valor (ej: 12,2)" inputmode="decimal" 
-                               value="{{ incidencia_a_editar.oxigeno_valor }}" class="hidden-input">
+                        <input type="text" id="valorOxigeno" name="valorOxigeno" placeholder="Valor (ej: 12,2)"
+                            inputmode="decimal" value="{{ incidencia_a_editar.oxigeno_valor }}" class="hidden-input">
                     </div>
 
                     <div class="form-group">
@@ -102,12 +126,14 @@
                         <label for="temperaturaNivel" class="hidden-input">Nivel de Temperatura:</label>
                         <select id="temperaturaNivel" name="temperaturaNivel" class="hidden-input">
                             <option value="">Seleccione nivel</option>
-                            <option value="alta" {% if incidencia_a_editar.temperatura_nivel == 'alta' %}selected{% endif %}>Alto</option>
-                            <option value="baja" {% if incidencia_a_editar.temperatura_nivel == 'baja' %}selected{% endif %}>Bajo</option>
+                            <option value="alta" {% if incidencia_a_editar.temperatura_nivel=='alta' %}selected{% endif
+                                %}>Alto</option>
+                            <option value="baja" {% if incidencia_a_editar.temperatura_nivel=='baja' %}selected{% endif
+                                %}>Bajo</option>
                         </select>
-                        <input type="text" id="valorTemperatura" name="valorTemperatura" 
-                               placeholder="Valor (ej: 12,2)" inputmode="decimal" 
-                               value="{{ incidencia_a_editar.temperatura_valor }}" class="hidden-input">
+                        <input type="text" id="valorTemperatura" name="valorTemperatura" placeholder="Valor (ej: 12,2)"
+                            inputmode="decimal" value="{{ incidencia_a_editar.temperatura_valor }}"
+                            class="hidden-input">
                     </div>
 
                     <div class="form-group">
@@ -116,8 +142,10 @@
                         <label for="conductividadNivel" class="hidden-input">Nivel de Conductividad:</label>
                         <select id="conductividadNivel" name="conductividadNivel" class="hidden-input">
                             <option value="">Seleccione nivel</option>
-                            <option value="alta" {% if incidencia_a_editar.conductividad_nivel == 'alta' %}selected{% endif %}>Alto</option>
-                            <option value="baja" {% if incidencia_a_editar.conductividad_nivel == 'baja' %}selected{% endif %}>Bajo</option>
+                            <option value="alta" {% if incidencia_a_editar.conductividad_nivel=='alta' %}selected{%
+                                endif %}>Alto</option>
+                            <option value="baja" {% if incidencia_a_editar.conductividad_nivel=='baja' %}selected{%
+                                endif %}>Bajo</option>
                         </select>
                     </div>
 
@@ -127,83 +155,105 @@
                         <label for="turbidezNivel" class="hidden-input">Nivel de Turbidez:</label>
                         <select id="turbidezNivel" name="turbidezNivel" class="hidden-input">
                             <option value="">Seleccione nivel</option>
-                            <option value="alta" {% if incidencia_a_editar.turbidez_nivel == 'alta' %}selected{% endif %}>Alto</option>
-                            <option value="baja" {% if incidencia_a_editar.turbidez_nivel == 'baja' %}selected{% endif %}>Bajo</option>
+                            <option value="alta" {% if incidencia_a_editar.turbidez_nivel=='alta' %}selected{% endif %}>
+                                Alto</option>
+                            <option value="baja" {% if incidencia_a_editar.turbidez_nivel=='baja' %}selected{% endif %}>
+                                Bajo</option>
                         </select>
-                        <input type="text" id="valorTurbidez" name="valorTurbidez" 
-                               placeholder="Valor (ej: 12,2)" inputmode="decimal" 
-                               value="{{ incidencia_a_editar.turbidez_valor }}" class="hidden-input">
+                        <input type="text" id="valorTurbidez" name="valorTurbidez" placeholder="Valor (ej: 12,2)"
+                            inputmode="decimal" value="{{ incidencia_a_editar.turbidez_valor }}" class="hidden-input">
                     </div>
                 </section>
 
-                <section class="form-section {% if not incidencia_a_editar.tipo_incidencia == 'sensores' %}hidden{% endif %}" id="section-sistema-sensores">
+                <section
+                    class="form-section {% if not incidencia_a_editar.tipo_incidencia == 'sensores' %}hidden{% endif %}"
+                    id="section-sistema-sensores">
                     <h2>4. Detalles: Sistemas de Sensores</h2>
                     <div class="form-group">
                         <label for="sistemaSensor">Sistema:</label>
-                        <select id="sistemaSensor" name="sistemaSensor" value="{{ incidencia_a_editar.sistema_sensor }}">
+                        <select id="sistemaSensor" name="sistemaSensor"
+                            value="{{ incidencia_a_editar.sistema_sensor }}">
                             <option value="">Seleccione un sistema</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="sensorDetectado">Sensor Detectado:</label>
-                        <select id="sensorDetectado" name="sensorDetectado" value="{{ incidencia_a_editar.sensor_detectado }}">
+                        <select id="sensorDetectado" name="sensorDetectado"
+                            value="{{ incidencia_a_editar.sensor_detectado }}">
                             <option value="">Seleccione un sensor</option>
                         </select>
                         <label for="sensorNivel" class="hidden-input">Nivel del Sensor:</label>
                         <select id="sensorNivel" name="sensorNivel" class="hidden-input">
                             <option value="">Seleccione nivel</option>
-                            <option value="sobre_esperado" {% if incidencia_a_editar.sensor_nivel == 'sobre_esperado' %}selected{% endif %}>Sobre lo esperado</option>
-                            <option value="bajo_esperado" {% if incidencia_a_editar.sensor_nivel == 'bajo_esperado' %}selected{% endif %}>Bajo lo esperado</option>
-                            <option value="sensor_apagado" {% if incidencia_a_editar.sensor_nivel == 'sensor_apagado' %}selected{% endif %}>Sensor apagado</option>
-                            <option value="sensor_mal_estado" {% if incidencia_a_editar.sensor_nivel == 'sensor_mal_estado' %}selected{% endif %}>Sensor en mal estado</option>
+                            <option value="sobre_esperado" {% if incidencia_a_editar.sensor_nivel=='sobre_esperado'
+                                %}selected{% endif %}>Sobre lo esperado</option>
+                            <option value="bajo_esperado" {% if incidencia_a_editar.sensor_nivel=='bajo_esperado'
+                                %}selected{% endif %}>Bajo lo esperado</option>
+                            <option value="sensor_apagado" {% if incidencia_a_editar.sensor_nivel=='sensor_apagado'
+                                %}selected{% endif %}>Sensor apagado</option>
+                            <option value="sensor_mal_estado" {% if
+                                incidencia_a_editar.sensor_nivel=='sensor_mal_estado' %}selected{% endif %}>Sensor en
+                                mal estado</option>
                         </select>
-                        <input type="number" id="valorSensor" name="valorSensor" 
-                               value="{{ incidencia_a_editar.sensor_valor }}" 
-                               placeholder="Valor exacto" step="0.1" class="hidden-input">
+                        <input type="number" id="valorSensor" name="valorSensor"
+                            value="{{ incidencia_a_editar.sensor_valor }}" placeholder="Valor exacto" step="0.1"
+                            class="hidden-input">
                     </div>
                 </section>
 
-                <section class="form-section {% if not incidencia_a_editar %}hidden{% endif %}" id="section-evaluacion-riesgos">
+                <section class="form-section {% if not incidencia_a_editar %}hidden{% endif %}"
+                    id="section-evaluacion-riesgos">
                     <h2>5. Evaluación de Riesgos y Observaciones</h2>
                     <div class="form-group">
                         <label for="tiempoResolucion">Tiempo de Resolución Estimado (minutos):</label>
-                        <input type="number" id="tiempoResolucion" name="tiempoResolucion" 
-                               value="{{ incidencia_a_editar.tiempo_resolucion }}" min="0" required>
+                        <input type="number" id="tiempoResolucion" name="tiempoResolucion"
+                            value="{{ incidencia_a_editar.tiempo_resolucion }}" min="0" required>
                     </div>
                     <div class="form-group">
                         <label>Riesgo para Peces:</label>
-                        <input type="radio" id="riesgoPecesSi" name="riesgoPeces" value="si" {% if incidencia_a_editar.riesgo_peces %}checked{% endif %} required>
+                        <input type="radio" id="riesgoPecesSi" name="riesgoPeces" value="si" {% if
+                            incidencia_a_editar.riesgo_peces %}checked{% endif %} required>
                         <label for="riesgoPecesSi">Sí</label>
-                        <input type="radio" id="riesgoPecesNo" name="riesgoPeces" value="no" {% if not incidencia_a_editar.riesgo_peces and incidencia_a_editar is not None %}checked{% endif %} required>
+                        <input type="radio" id="riesgoPecesNo" name="riesgoPeces" value="no" {% if not
+                            incidencia_a_editar.riesgo_peces and incidencia_a_editar is not None %}checked{% endif %}
+                            required>
                         <label for="riesgoPecesNo">No</label>
                     </div>
                     <div class="form-group">
                         <label>Pérdida Económica:</label>
-                        <input type="radio" id="perdidaEconomicaSi" name="perdidaEconomica" value="si" {% if incidencia_a_editar.perdida_economica %}checked{% endif %} required>
+                        <input type="radio" id="perdidaEconomicaSi" name="perdidaEconomica" value="si" {% if
+                            incidencia_a_editar.perdida_economica %}checked{% endif %} required>
                         <label for="perdidaEconomicaSi">Sí</label>
-                        <input type="radio" id="perdidaEconomicaNo" name="perdidaEconomica" value="no" {% if not incidencia_a_editar.perdida_economica and incidencia_a_editar is not None %}checked{% endif %} required>
+                        <input type="radio" id="perdidaEconomicaNo" name="perdidaEconomica" value="no" {% if not
+                            incidencia_a_editar.perdida_economica and incidencia_a_editar is not None %}checked{% endif
+                            %} required>
                         <label for="perdidaEconomicaNo">No</label>
                     </div>
                     <div class="form-group">
                         <label>Riesgo para Personas:</label>
-                        <input type="radio" id="riesgoPersonasSi" name="riesgoPersonas" value="si" {% if incidencia_a_editar.riesgo_personas %}checked{% endif %} required>
+                        <input type="radio" id="riesgoPersonasSi" name="riesgoPersonas" value="si" {% if
+                            incidencia_a_editar.riesgo_personas %}checked{% endif %} required>
                         <label for="riesgoPersonasSi">Sí</label>
-                        <input type="radio" id="riesgoPersonasNo" name="riesgoPersonas" value="no" {% if not incidencia_a_editar.riesgo_personas and incidencia_a_editar is not None %}checked{% endif %} required>
+                        <input type="radio" id="riesgoPersonasNo" name="riesgoPersonas" value="no" {% if not
+                            incidencia_a_editar.riesgo_personas and incidencia_a_editar is not None %}checked{% endif %}
+                            required>
                         <label for="riesgoPersonasNo">No</label>
                     </div>
                     <div class="form-group">
                         <label for="observacion">Observación Adicional:</label>
-                        <textarea id="observacion" name="observacion" rows="4" placeholder="Describa cualquier detalle relevante...">{{ incidencia_a_editar.observacion|default:'' }}</textarea>
+                        <textarea id="observacion" name="observacion" rows="4"
+                            placeholder="Describa cualquier detalle relevante...">{{ incidencia_a_editar.observacion|default:'' }}</textarea>
                     </div>
                 </section>
 
-                <section class="form-section {% if not incidencia_a_editar %}hidden{% endif %}" id="section-contacto-operario">
+                <section class="form-section {% if not incidencia_a_editar %}hidden{% endif %}"
+                    id="section-contacto-operario">
                     <h2>6. Contacto del Operario que Respondió</h2>
                     <div class="form-group">
                         <label for="operarioContacto">Operario que Respondió:</label>
                         <select id="operarioContacto" name="operarioContacto">
                             <option value="">Seleccione un operario</option>
-                            </select>
+                        </select>
                     </div>
                     <div class="form-group info-operario-hidden" id="info-operario-selected">
                         <label>Información del Operario:</label>
@@ -213,36 +263,56 @@
                             <p><strong>Teléfono:</strong> <span id="operario-telefono-display"></span></p>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="tipoIncidenciaNormalizada">Tipo de Incidencia Normalizada:</label>
                         <select id="tipoIncidenciaNormalizada" name="tipoIncidenciaNormalizada" required>
                             <option value="">Seleccione el tipo de incidencia</option>
                             <optgroup label="Falla Operacional">
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Estanque en manejo especial' %}selected{% endif %}>Estanque en manejo especial</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Estanque en flashing' %}selected{% endif %}>Estanque en flashing</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Estanque con cambio de peces' %}selected{% endif %}>Estanque con cambio de peces</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Recambio de agua' %}selected{% endif %}>Recambio de agua</option>
+                                <option {% if
+                                    incidencia_a_editar.tipo_incidencia_normalizada=='Estanque en manejo especial'
+                                    %}selected{% endif %}>Estanque en manejo especial</option>
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Estanque en flashing'
+                                    %}selected{% endif %}>Estanque en flashing</option>
+                                <option {% if
+                                    incidencia_a_editar.tipo_incidencia_normalizada=='Estanque con cambio de peces'
+                                    %}selected{% endif %}>Estanque con cambio de peces</option>
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Recambio de agua'
+                                    %}selected{% endif %}>Recambio de agua</option>
                             </optgroup>
                             <optgroup label="Falla Sensores">
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Falla sensor CO2' %}selected{% endif %}>Falla sensor CO2</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Falla sensor T°' %}selected{% endif %}>Falla sensor T°</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Falla sensor pH' %}selected{% endif %}>Falla sensor pH</option>
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Falla sensor CO2'
+                                    %}selected{% endif %}>Falla sensor CO2</option>
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Falla sensor T°'
+                                    %}selected{% endif %}>Falla sensor T°</option>
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Falla sensor pH'
+                                    %}selected{% endif %}>Falla sensor pH</option>
                             </optgroup>
                             <optgroup label="Problemas Eléctricos / Conectividad">
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Corte de energía' %}selected{% endif %}>Corte de energía</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Falla en plataforma de monitoreo' %}selected{% endif %}>Falla en plataforma de monitoreo</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Sin señal o conectividad' %}selected{% endif %}>Sin señal o conectividad</option>
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Corte de energía'
+                                    %}selected{% endif %}>Corte de energía</option>
+                                <option {% if
+                                    incidencia_a_editar.tipo_incidencia_normalizada=='Falla en plataforma de monitoreo'
+                                    %}selected{% endif %}>Falla en plataforma de monitoreo</option>
+                                <option {% if
+                                    incidencia_a_editar.tipo_incidencia_normalizada=='Sin señal o conectividad'
+                                    %}selected{% endif %}>Sin señal o conectividad</option>
                             </optgroup>
                             <optgroup label="Incidencia Normal">
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Temperatura baja' %}selected{% endif %}>Temperatura baja</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Temperatura alta' %}selected{% endif %}>Temperatura alta</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'CO2 alto' %}selected{% endif %}>CO2 alto</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'CO2 bajo' %}selected{% endif %}>CO2 bajo</option>
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Temperatura baja'
+                                    %}selected{% endif %}>Temperatura baja</option>
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Temperatura alta'
+                                    %}selected{% endif %}>Temperatura alta</option>
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='CO2 alto' %}selected{%
+                                    endif %}>CO2 alto</option>
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='CO2 bajo' %}selected{%
+                                    endif %}>CO2 bajo</option>
                             </optgroup>
                             <optgroup label="Sin Comunicación">
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Llamada no contestada' %}selected{% endif %}>Llamada no contestada</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Celular centro apagado' %}selected{% endif %}>Celular centro apagado</option>
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Llamada no contestada'
+                                    %}selected{% endif %}>Llamada no contestada</option>
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Celular centro apagado'
+                                    %}selected{% endif %}>Celular centro apagado</option>
                             </optgroup>
                         </select>
                     </div>
@@ -250,9 +320,9 @@
 
                 <button type="button" id="submitForm">
                     {% if incidencia_a_editar %}
-                        Actualizar Incidencia
+                    Actualizar Incidencia
                     {% else %}
-                        Registrar Incidencia
+                    Registrar Incidencia
                     {% endif %}
                 </button>
 
@@ -262,20 +332,21 @@
 
         <div class="sidebar-actions">
             <h4>🛠️ Acciones</h4>
-            
+
             <div class="action-group">
                 <span>Reportes</span>
-                <button type="button" id="generarReporteDia" class="action-primary" onclick="window.location.href='{% url 'reporte' %}'">📋 Ver Reportes</button>
+                <button type="button" id="generarReporteDia" class="action-primary"
+                    onclick="window.location.href='{% url 'reporte' %}'">📋 Ver Reportes</button>
                 <br>
-          
+
             </div>
-            
+
             <div class="action-group">
                 <span>Dashboards</span>
                 <button onclick="window.location.href='{% url 'dashboard' %}'">📈 General</button>
-             
+
             </div>
-            
+
             <div class="action-group">
                 <span>Sesión</span>
                 <form method="post" action="{% url 'logout' %}" style="width: 100%;">
@@ -284,21 +355,22 @@
                 </form>
             </div>
         </div>
-        </div>
+    </div>
 
     <script>
-      window.DATOS_MODULOS = {{ datos_modulos_json|safe }};
+        window.DATOS_MODULOS = {{ datos_modulos_json | safe }};
     </script>
 
     <script>
-        window.DATOS_OPERARIOS = {{ datos_operarios_json|safe }};
+        window.DATOS_OPERARIOS = {{ datos_operarios_json | safe }};
     </script>
-    
+
     <script>
-        window.INCIDENCIA_A_EDITAR = {{ incidencia_a_editar_json|safe }};
+        window.INCIDENCIA_A_EDITAR = {{ incidencia_a_editar_json | safe }};
     </script>
-    
+
     <script src="{% static 'js/formulario.js' %}"></script>
 
 </body>
+
 </html>

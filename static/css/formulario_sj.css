@@ -2,12 +2,18 @@
 
 /* --- Paleta de Colores (Basada en image_67b07f.jpg) --- */
 :root {
-    --primary-color: #0ab6c2;   /* Teal/Aqua principal de los botones y acentos */
-    --background-teal: #219297; /* Fondo del body */
-    --container-white: #ffffff;   /* Fondo de la tarjeta/formulario */
-    --text-dark: #343a40;       /* Texto general oscuro */
-    --text-muted: #6c757d;      /* Texto de labels (no se ve en la foto, pero es útil) */
-    --border-color-light: #dee2e6; /* Bordes sutiles */
+    --primary-color: #0ab6c2;
+    /* Teal/Aqua principal de los botones y acentos */
+    --background-teal: #219297;
+    /* Fondo del body */
+    --container-white: #ffffff;
+    /* Fondo de la tarjeta/formulario */
+    --text-dark: #343a40;
+    /* Texto general oscuro */
+    --text-muted: #6c757d;
+    /* Texto de labels (no se ve en la foto, pero es útil) */
+    --border-color-light: #dee2e6;
+    /* Bordes sutiles */
     --success-color: #28a745;
     --error-color: #dc3545;
 }
@@ -21,13 +27,16 @@
 }
 
 body {
-    background-color: var(--background-teal); /* Fondo teal como en la imagen */
+    background-color: var(--background-teal);
+    /* Fondo teal como en la imagen */
     color: var(--text-dark);
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding-top: 50px;
+    padding: 20px 10px;
+    /* Reducido para móviles */
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 /* --- Contenedor Principal (Tarjeta Blanca) --- */
@@ -38,30 +47,36 @@ body {
 }
 
 .formulario-container {
-    max-width: 600px; /* Ancho compacto como en la imagen */
+    max-width: 600px;
+    /* Ancho compacto como en la imagen */
     width: 100%;
     background: var(--container-white);
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     border: 1px solid #e0e0e0;
+    margin: 10px 0;
+    /* Evitar desbordamiento lateral */
 }
 
 /* --- Encabezado del Formulario (Logo y Título) --- */
 .titulo-y-logo {
     display: flex;
-    flex-direction: column; /* Icono arriba, texto abajo */
+    flex-direction: column;
+    /* Icono arriba, texto abajo */
     align-items: center;
     padding: 30px 20px 20px 20px;
     border-bottom: 1px solid var(--border-color-light);
-    background: var(--container-white); /* Fondo blanco como en la imagen */
+    background: var(--container-white);
+    /* Fondo blanco como en la imagen */
 }
 
 .titulo-y-logo img {
-    height: 60px; /* Logo más grande */
+    height: 60px;
+    /* Logo más grande */
     margin-bottom: 15px;
     /* Si el logo es cuadrado, esto lo suaviza */
-    border-radius: 10px; 
+    border-radius: 10px;
 }
 
 .titulo-y-logo h1 {
@@ -79,6 +94,7 @@ form#incidenciaForm {
 .form-step {
     display: none;
 }
+
 .form-step.active {
     display: block;
 }
@@ -88,6 +104,7 @@ fieldset {
     padding: 0;
     margin-bottom: 30px;
 }
+
 legend {
     color: var(--primary-color);
     font-weight: bold;
@@ -102,19 +119,23 @@ legend {
 /* --- Grupos de Inputs --- */
 .form-group-triple {
     display: grid;
-    grid-template-columns: 1fr; /* Una columna por defecto */
+    grid-template-columns: 1fr;
+    /* Una columna por defecto */
     gap: 20px;
     margin-bottom: 20px;
 }
+
 @media (min-width: 768px) {
     .form-group-triple {
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
 .input-group {
     display: flex;
     flex-direction: column;
 }
+
 .input-group.full-width {
     grid-column: 1 / -1;
 }
@@ -126,10 +147,13 @@ legend {
     margin-bottom: 8px;
     font-weight: 600;
 }
-.form-control, .form-select {
+
+.form-control,
+.form-select {
     width: 100%;
     padding: 10px 12px;
-    background-color: #f8f9fa; /* Fondo gris muy claro para inputs */
+    background-color: #f8f9fa;
+    /* Fondo gris muy claro para inputs */
     border: 1px solid var(--border-color-light);
     border-radius: 5px;
     color: var(--text-dark);
@@ -137,12 +161,15 @@ legend {
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-.form-control:focus, .form-select:focus {
+
+.form-control:focus,
+.form-select:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 0.2rem rgba(10, 182, 194, 0.25);
     background-color: #ffffff;
 }
+
 .form-select:disabled {
     background-color: #e9ecef;
     opacity: 0.7;
@@ -155,6 +182,7 @@ legend {
     justify-content: space-between;
     margin-top: 30px;
 }
+
 .step-btn {
     padding: 12px 25px;
     background-color: var(--primary-color);
@@ -167,25 +195,33 @@ legend {
     transition: background-color 0.2s ease, opacity 0.2s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
 .step-btn.btn-anterior {
     background-color: var(--text-muted);
 }
+
 .step-btn.btn-anterior:hover {
     background-color: #5a6268;
 }
+
 .step-btn:hover {
-    background-color: #089da5; /* Teal más oscuro */
+    background-color: #089da5;
+    /* Teal más oscuro */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 }
+
 .step-btn:disabled {
     background-color: #cccccc;
     opacity: 0.6;
     cursor: not-allowed;
     box-shadow: none;
 }
+
 .step-btn.btn-submit {
-    background-color: var(--primary-color); /* Mismo color teal */
+    background-color: var(--primary-color);
+    /* Mismo color teal */
 }
+
 .step-btn.btn-submit:hover {
     background-color: #089da5;
 }
@@ -199,6 +235,7 @@ legend {
     text-align: left;
     margin-top: 20px;
 }
+
 #resumenIncidencia p {
     margin-bottom: 10px;
     font-size: 1em;
@@ -206,11 +243,13 @@ legend {
     display: flex;
     justify-content: space-between;
 }
+
 #resumenIncidencia strong {
     color: var(--primary-color);
     margin-right: 15px;
     flex-shrink: 0;
 }
+
 #resumenIncidencia span {
     color: var(--text-dark);
     text-align: right;
@@ -227,11 +266,13 @@ legend {
     font-size: 0.95em;
     border: 1px solid transparent;
 }
+
 .alert-success {
     background-color: #d4edda;
     color: #155724;
     border-color: #c3e6cb;
 }
+
 .alert-danger {
     background-color: #f8d7da;
     color: #721c24;

@@ -1,14 +1,26 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Incidencias - Santa Juana</title>
-    
+
     <link rel="stylesheet" href="{% static 'css/formulario.css' %}">
-    
+
     <link rel="icon" type="image/png" href="{% static 'imagenes/logo-pestaña.png' %}">
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0056b3">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
 
     <style>
         /* Oculta el contenedor de Zona/Estanque si no es necesario */
@@ -20,17 +32,20 @@
         .alert {
             padding: 15px;
             margin-bottom: 20px;
-            border-radius: 12px; /* Mismo radio que tus secciones */
+            border-radius: 12px;
+            /* Mismo radio que tus secciones */
             font-weight: bold;
             text-align: center;
             font-size: 1em;
             border: 1px solid transparent;
         }
+
         .alert-success {
             background-color: #d4edda;
             color: #155724;
             border-color: #c3e6cb;
         }
+
         .alert-danger {
             background-color: #f8d7da;
             color: #721c24;
@@ -38,25 +53,26 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="page-layout">
-        
+
         <div class="form-container">
-            
-            <img src="{% static 'imagenes/logo-reporte-cermaq.png' %}" alt="Logo Reporte de Incidencias CERMAQ" class="form-logo">
-            
-            <h1>{% if incidencia_a_editar %}Editar Incidencia{% else %}Formulario de Incidencia{% endif %} - Centro Santa Juana</h1>
+
+            <img src="{% static 'imagenes/logo-reporte-cermaq.png' %}" alt="Logo Reporte de Incidencias CERMAQ"
+                class="form-logo">
+
+            <h1>{% if incidencia_a_editar %}Editar Incidencia{% else %}Formulario de Incidencia{% endif %} - Centro
+                Santa Juana</h1>
 
             <div id="alerta-container" style="margin-bottom: 20px;"></div>
 
-            <form id="incidenciaForm" 
-                  data-centro-slug="{{ centro_actual_slug|safe }}" 
-                  data-api-url="{% url 'api-registrar-incidencia' %}"
-                  data-update-url="{% if incidencia_a_editar %}{% url 'api-update-incidencia' incidencia_a_editar.pk %}{% endif %}"
-                  data-incidencia-id="{{ incidencia_a_editar.pk|default:'' }}"
-                  data-home-url="{% url 'home' %}">
-                
+            <form id="incidenciaForm" data-centro-slug="{{ centro_actual_slug|safe }}"
+                data-api-url="{% url 'api-registrar-incidencia' %}"
+                data-update-url="{% if incidencia_a_editar %}{% url 'api-update-incidencia' incidencia_a_editar.pk %}{% endif %}"
+                data-incidencia-id="{{ incidencia_a_editar.pk|default:'' }}" data-home-url="{% url 'home' %}">
+
                 {% csrf_token %}
                 <input type="hidden" id="id_centro_hidden" name="centro" value="">
 
@@ -90,7 +106,7 @@
                         <select id="zona" name="estanque" required>
                             <option value="" disabled selected>Seleccione Zona</option>
                         </select>
-                        
+
                         <!-- Checkbox para Incidencia General -->
                         <div style="margin-top: 12px;">
                             <input type="checkbox" id="afecta_todo_modulo" name="afecta_todo_modulo">
@@ -157,15 +173,16 @@
                     </div>
                     <div class="form-group full-width">
                         <label for="observacion">Observaciones:</label>
-                        <textarea id="observacion" name="observacion" rows="3" placeholder="Detalle la causa, acciones tomadas..."></textarea>
+                        <textarea id="observacion" name="observacion" rows="3"
+                            placeholder="Detalle la causa, acciones tomadas..."></textarea>
                     </div>
                 </div>
-                
+
                 <button type="submit" id="submitForm">
                     {% if incidencia_a_editar %}
-                        Actualizar Incidencia
+                    Actualizar Incidencia
                     {% else %}
-                        Registrar Incidencia
+                    Registrar Incidencia
                     {% endif %}
                 </button>
             </form>
@@ -174,22 +191,23 @@
         <!-- Sidebar de Acciones -->
         <div class="sidebar-actions">
             <h4>🛠️ Acciones</h4>
-            
+
             <div class="action-group">
                 <span>Reportes</span>
-                <button type="button" class="action-primary" onclick="window.location.href='{% url 'reporte' %}'">📋 Ver Reportes</button>
+                <button type="button" class="action-primary" onclick="window.location.href='{% url 'reporte' %}'">📋 Ver
+                    Reportes</button>
             </div>
-            
+
             <div class="action-group">
                 <span>Dashboards</span>
                 <button onclick="window.location.href='{% url 'dashboard' %}'">📈 General</button>
             </div>
-            
+
             <div class="action-group">
                 <span>Navegación</span>
                 <button onclick="window.location.href='{% url 'home' %}'">🏠 Inicio</button>
             </div>
-            
+
             <div class="action-group">
                 <span>Sesión</span>
                 <form method="post" action="{% url 'logout' %}" style="width: 100%;">
@@ -198,11 +216,11 @@
                 </form>
             </div>
         </div>
-        
+
     </div>
 
     {{ datos_operarios_json|json_script:"operarios-data" }}
-    
+
     <script id="centros-data" type="application/json">
         [
             {% for centro in centros %}
@@ -217,4 +235,5 @@
 
     <script src="{% static 'js/formulario_sj.js' %}" defer></script>
 </body>
+
 </html>

@@ -1,18 +1,58 @@
-/* static/css/dashboard.css */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body {
     background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
     min-height: 100vh;
+    overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+}
+
+/* === Layout Principal (Copiado de formulario.css para consistencia) === */
+.page-layout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .page-layout {
+        flex-direction: column;
+        padding: 5px;
+        gap: 15px;
+    }
 }
 
 /* Contenedor principal del dashboard */
 .dashboard-container {
     max-width: 1400px;
-    margin: 30px auto;
-    padding: 35px 45px;
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
     background: #ffffff;
     border-radius: 15px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 12px;
+    }
 }
 
 .dashboard-container h1 {
@@ -21,7 +61,7 @@ body {
     color: #17a2b8;
     font-size: 2.2em;
     font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .dashboard-subtitle {
@@ -38,8 +78,9 @@ body {
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    overflow: hidden; /* Para que la tabla respete los bordes */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    /* Para que la tabla respete los bordes */
     padding: 30px;
     text-align: center;
     color: #888;
@@ -58,7 +99,8 @@ body {
 
 .kpi-table-container {
     width: 100%;
-    overflow-x: auto; /* Para responsividad en móviles */
+    overflow-x: auto;
+    /* Para responsividad en móviles */
 }
 
 .dashboard-kpi-table {
@@ -97,11 +139,13 @@ body {
 }
 
 .kpi-badge-cumple {
-    background-color: #28a745; /* Verde */
+    background-color: #28a745;
+    /* Verde */
 }
 
 .kpi-badge-no-cumple {
-    background-color: #dc3545; /* Rojo */
+    background-color: #dc3545;
+    /* Rojo */
 }
 
 /* Estilos de Carga */
@@ -122,11 +166,12 @@ body {
     margin-bottom: 35px;
     border: 2px solid #dee2e6;
     align-items: flex-end;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .control-group {
-    flex: 1 1 200px; /* Crece, se encoge, base de 200px */
+    flex: 1 1 200px;
+    /* Crece, se encoge, base de 200px */
 }
 
 .control-group label {
@@ -166,13 +211,13 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 1em;
-    box-shadow: 0 4px 12px rgba(23,162,184,0.3);
+    box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
 }
 
 .dashboard-btn:hover {
     background: linear-gradient(135deg, #138496, #117a8b);
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(23,162,184,0.4);
+    box-shadow: 0 6px 20px rgba(23, 162, 184, 0.4);
 }
 
 /* --- Estilos para los Gráficos (FALTANTE) --- */
@@ -189,12 +234,14 @@ body {
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     padding: 25px;
 
     /* --- LA CORRECCIÓN CLAVE --- */
-    position: relative; /* Necesario para Chart.js */
-    height: 400px;      /* Altura fija para evitar que se estire */
+    position: relative;
+    /* Necesario para Chart.js */
+    height: 400px;
+    /* Altura fija para evitar que se estire */
 }
 
 .chart-container h2 {
@@ -215,7 +262,7 @@ body {
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     padding: 25px;
     position: relative;
     height: 520px;
@@ -264,7 +311,7 @@ body {
         /* Hacemos 1 sola columna en pantallas más pequeñas */
         grid-template-columns: 1fr;
     }
-    
+
     .dashboard-charts-grid {
         /* 1 columna en tablets */
         grid-template-columns: 1fr;
@@ -296,14 +343,14 @@ body {
     border: none;
     border-radius: 15px;
     padding: 30px 20px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
     min-height: 160px;
 }
 
 .metric-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(23,162,184,0.2);
+    box-shadow: 0 12px 30px rgba(23, 162, 184, 0.2);
 }
 
 .metric-card:nth-child(1) {
@@ -325,7 +372,7 @@ body {
 .metric-icon {
     font-size: 3.5em;
     margin-bottom: 15px;
-    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .metric-content {
@@ -337,7 +384,7 @@ body {
     font-weight: 800;
     color: #17a2b8;
     margin: 0 0 8px 0;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .metric-content p {
@@ -368,17 +415,68 @@ body {
         grid-template-columns: 1fr;
     }
 }
-/* --- Estilos para Botones de Sidebar (si faltan) --- */
 
-/* (Puede que ya tengas esta clase de 'reporte.html', 
-   pero la añadimos por si acaso) */
-.sidebar-actions .action-primary-green {
-    background: linear-gradient(135deg, #1D976C, #28a745);
-    color: white;
-    font-weight: bold;
+/* === Sidebar de Acciones (Copiado de formulario.css) === */
+.sidebar-actions {
+    position: sticky;
+    top: 20px;
+    width: 260px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    padding: 20px;
+    font-size: 14px;
 }
 
-.sidebar-actions .action-primary-green:hover {
-    background: linear-gradient(135deg, #198754, #1D976C);
-    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+@media (max-width: 768px) {
+    .sidebar-actions {
+        position: relative;
+        top: auto;
+        width: 100%;
+        margin: 10px 0;
+        padding: 15px;
+    }
+}
+
+.sidebar-actions h4 {
+    color: #006666;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #17a2b8;
+    padding-bottom: 8px;
+}
+
+.action-group {
+    margin-bottom: 20px;
+}
+
+.action-group span {
+    display: block;
+    color: #17a2b8;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.sidebar-actions button {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #17a2b8, #138496);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sidebar-actions button:hover {
+    background: linear-gradient(135deg, #138496, #117a8b);
+    transform: translateY(-2px);
 }

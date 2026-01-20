@@ -9,11 +9,16 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-0*sy6%4^a33%v$5@*&(wtnd-e()d$am^yx+!^hipg0!xer(tx4'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-0*sy6%4^a33%v$5@*&(wtnd-e()d$am^yx+!^hipg0!xer(tx4')
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'web-production-a753e.up.railway.app',
+    'localhost',
+    '127.0.0.1',
+    '.up.railway.app'
+]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://web-production-a753e.up.railway.app',
@@ -67,7 +72,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres.fzhueoayckxgcswuaxcy',
-        'PASSWORD': 'FPYc2uccss67BsqG',
+        'PASSWORD': os.getenv('DB_PASSWORD', 'FPYc2uccss67BsqG'),
         'HOST': 'aws-1-us-east-1.pooler.supabase.com',
         'PORT': '6543',
         'OPTIONS': {
