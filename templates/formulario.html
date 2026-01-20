@@ -49,11 +49,11 @@
                         <label for="turno">Turno:</label>
                         <select id="turno" name="turno" required>
                             <option value="">Seleccione un turno</option>
-                            <option value="Mañana" {% if incidencia_a_editar.turno=='Mañana' %}selected{% endif %}>
+                            <option value="Mañana" {% if incidencia_a_editar.turno == 'Mañana' %}selected{% endif %}>
                                 Mañana</option>
-                            <option value="Tarde" {% if incidencia_a_editar.turno=='Tarde' %}selected{% endif %}>Tarde
+                            <option value="Tarde" {% if incidencia_a_editar.turno == 'Tarde' %}selected{% endif %}>Tarde
                             </option>
-                            <option value="Noche" {% if incidencia_a_editar.turno=='Noche' %}selected{% endif %}>Noche
+                            <option value="Noche" {% if incidencia_a_editar.turno == 'Noche' %}selected{% endif %}>Noche
                             </option>
                         </select>
                     </div>
@@ -63,7 +63,7 @@
                         <select id="centro" name="centro" required>
                             <option value="">Seleccione un centro</option>
                             {% for c in centros %}
-                            <option value="{{ c.slug }}" {% if incidencia_a_editar.centro.slug==c.slug %}selected{%
+                            <option value="{{ c.slug }}" {% if incidencia_a_editar.centro.slug == c.slug %}selected{%
                                 endif %}>
                                 {{ c.nombre }}
                             </option>
@@ -77,12 +77,12 @@
                     <h2>2. Tipo de Incidencia</h2>
                     <div class="form-group-radio">
                         <input type="radio" id="tipoModulos" name="tipoIncidencia" value="modulos" {% if
-                            incidencia_a_editar.tipo_incidencia=='modulos' %}checked{% endif %}>
+                            incidencia_a_editar.tipo_incidencia == 'modulos' %}checked{% endif %}>
                         <label for="tipoModulos">Parámetros de Módulos y Estanques</label>
                     </div>
                     <div class="form-group-radio">
                         <input type="radio" id="tipoSensores" name="tipoIncidencia" value="sensores" {% if
-                            incidencia_a_editar.tipo_incidencia=='sensores' %}checked{% endif %}>
+                            incidencia_a_editar.tipo_incidencia == 'sensores' %}checked{% endif %}>
                         <label for="tipoSensores">Sistemas de Sensores</label>
                     </div>
                 </section>
@@ -111,9 +111,9 @@
                         <label for="oxigenoNivel" class="hidden-input">Nivel de Oxígeno:</label>
                         <select id="oxigenoNivel" name="oxigenoNivel" class="hidden-input">
                             <option value="">Seleccione nivel</option>
-                            <option value="alta" {% if incidencia_a_editar.oxigeno_nivel=='alta' %}selected{% endif %}>
+                            <option value="alta" {% if incidencia_a_editar.oxigeno_nivel == 'alta' %}selected{% endif %}>
                                 Alto</option>
-                            <option value="baja" {% if incidencia_a_editar.oxigeno_nivel=='baja' %}selected{% endif %}>
+                            <option value="baja" {% if incidencia_a_editar.oxigeno_nivel == 'baja' %}selected{% endif %}>
                                 Bajo</option>
                         </select>
                         <input type="text" id="valorOxigeno" name="valorOxigeno" placeholder="Valor (ej: 12,2)"
@@ -126,9 +126,9 @@
                         <label for="temperaturaNivel" class="hidden-input">Nivel de Temperatura:</label>
                         <select id="temperaturaNivel" name="temperaturaNivel" class="hidden-input">
                             <option value="">Seleccione nivel</option>
-                            <option value="alta" {% if incidencia_a_editar.temperatura_nivel=='alta' %}selected{% endif
+                            <option value="alta" {% if incidencia_a_editar.temperatura_nivel == 'alta' %}selected{% endif
                                 %}>Alto</option>
-                            <option value="baja" {% if incidencia_a_editar.temperatura_nivel=='baja' %}selected{% endif
+                            <option value="baja" {% if incidencia_a_editar.temperatura_nivel == 'baja' %}selected{% endif
                                 %}>Bajo</option>
                         </select>
                         <input type="text" id="valorTemperatura" name="valorTemperatura" placeholder="Valor (ej: 12,2)"
@@ -142,9 +142,9 @@
                         <label for="conductividadNivel" class="hidden-input">Nivel de Conductividad:</label>
                         <select id="conductividadNivel" name="conductividadNivel" class="hidden-input">
                             <option value="">Seleccione nivel</option>
-                            <option value="alta" {% if incidencia_a_editar.conductividad_nivel=='alta' %}selected{%
+                            <option value="alta" {% if incidencia_a_editar.conductividad_nivel == 'alta' %}selected{%
                                 endif %}>Alto</option>
-                            <option value="baja" {% if incidencia_a_editar.conductividad_nivel=='baja' %}selected{%
+                            <option value="baja" {% if incidencia_a_editar.conductividad_nivel == 'baja' %}selected{%
                                 endif %}>Bajo</option>
                         </select>
                     </div>
@@ -155,9 +155,9 @@
                         <label for="turbidezNivel" class="hidden-input">Nivel de Turbidez:</label>
                         <select id="turbidezNivel" name="turbidezNivel" class="hidden-input">
                             <option value="">Seleccione nivel</option>
-                            <option value="alta" {% if incidencia_a_editar.turbidez_nivel=='alta' %}selected{% endif %}>
+                            <option value="alta" {% if incidencia_a_editar.turbidez_nivel == 'alta' %}selected{% endif %}>
                                 Alto</option>
-                            <option value="baja" {% if incidencia_a_editar.turbidez_nivel=='baja' %}selected{% endif %}>
+                            <option value="baja" {% if incidencia_a_editar.turbidez_nivel == 'baja' %}selected{% endif %}>
                                 Bajo</option>
                         </select>
                         <input type="text" id="valorTurbidez" name="valorTurbidez" placeholder="Valor (ej: 12,2)"
@@ -185,14 +185,14 @@
                         <label for="sensorNivel" class="hidden-input">Nivel del Sensor:</label>
                         <select id="sensorNivel" name="sensorNivel" class="hidden-input">
                             <option value="">Seleccione nivel</option>
-                            <option value="sobre_esperado" {% if incidencia_a_editar.sensor_nivel=='sobre_esperado'
+                            <option value="sobre_esperado" {% if incidencia_a_editar.sensor_nivel == 'sobre_esperado'
                                 %}selected{% endif %}>Sobre lo esperado</option>
-                            <option value="bajo_esperado" {% if incidencia_a_editar.sensor_nivel=='bajo_esperado'
+                            <option value="bajo_esperado" {% if incidencia_a_editar.sensor_nivel == 'bajo_esperado'
                                 %}selected{% endif %}>Bajo lo esperado</option>
-                            <option value="sensor_apagado" {% if incidencia_a_editar.sensor_nivel=='sensor_apagado'
+                            <option value="sensor_apagado" {% if incidencia_a_editar.sensor_nivel == 'sensor_apagado'
                                 %}selected{% endif %}>Sensor apagado</option>
                             <option value="sensor_mal_estado" {% if
-                                incidencia_a_editar.sensor_nivel=='sensor_mal_estado' %}selected{% endif %}>Sensor en
+                                incidencia_a_editar.sensor_nivel == 'sensor_mal_estado' %}selected{% endif %}>Sensor en
                                 mal estado</option>
                         </select>
                         <input type="number" id="valorSensor" name="valorSensor"
@@ -270,48 +270,48 @@
                             <option value="">Seleccione el tipo de incidencia</option>
                             <optgroup label="Falla Operacional">
                                 <option {% if
-                                    incidencia_a_editar.tipo_incidencia_normalizada=='Estanque en manejo especial'
+                                    incidencia_a_editar.tipo_incidencia_normalizada == 'Estanque en manejo especial'
                                     %}selected{% endif %}>Estanque en manejo especial</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Estanque en flashing'
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Estanque en flashing'
                                     %}selected{% endif %}>Estanque en flashing</option>
                                 <option {% if
-                                    incidencia_a_editar.tipo_incidencia_normalizada=='Estanque con cambio de peces'
+                                    incidencia_a_editar.tipo_incidencia_normalizada == 'Estanque con cambio de peces'
                                     %}selected{% endif %}>Estanque con cambio de peces</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Recambio de agua'
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Recambio de agua'
                                     %}selected{% endif %}>Recambio de agua</option>
                             </optgroup>
                             <optgroup label="Falla Sensores">
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Falla sensor CO2'
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Falla sensor CO2'
                                     %}selected{% endif %}>Falla sensor CO2</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Falla sensor T°'
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Falla sensor T°'
                                     %}selected{% endif %}>Falla sensor T°</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Falla sensor pH'
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Falla sensor pH'
                                     %}selected{% endif %}>Falla sensor pH</option>
                             </optgroup>
                             <optgroup label="Problemas Eléctricos / Conectividad">
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Corte de energía'
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Corte de energía'
                                     %}selected{% endif %}>Corte de energía</option>
                                 <option {% if
-                                    incidencia_a_editar.tipo_incidencia_normalizada=='Falla en plataforma de monitoreo'
+                                    incidencia_a_editar.tipo_incidencia_normalizada == 'Falla en plataforma de monitoreo'
                                     %}selected{% endif %}>Falla en plataforma de monitoreo</option>
                                 <option {% if
-                                    incidencia_a_editar.tipo_incidencia_normalizada=='Sin señal o conectividad'
+                                    incidencia_a_editar.tipo_incidencia_normalizada == 'Sin señal o conectividad'
                                     %}selected{% endif %}>Sin señal o conectividad</option>
                             </optgroup>
                             <optgroup label="Incidencia Normal">
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Temperatura baja'
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Temperatura baja'
                                     %}selected{% endif %}>Temperatura baja</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Temperatura alta'
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Temperatura alta'
                                     %}selected{% endif %}>Temperatura alta</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='CO2 alto' %}selected{%
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'CO2 alto' %}selected{%
                                     endif %}>CO2 alto</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='CO2 bajo' %}selected{%
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'CO2 bajo' %}selected{%
                                     endif %}>CO2 bajo</option>
                             </optgroup>
                             <optgroup label="Sin Comunicación">
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Llamada no contestada'
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Llamada no contestada'
                                     %}selected{% endif %}>Llamada no contestada</option>
-                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada=='Celular centro apagado'
+                                <option {% if incidencia_a_editar.tipo_incidencia_normalizada == 'Celular centro apagado'
                                     %}selected{% endif %}>Celular centro apagado</option>
                             </optgroup>
                         </select>
