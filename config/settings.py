@@ -24,8 +24,15 @@ CSRF_TRUSTED_ORIGINS = [
     'https://web-production-a753e.up.railway.app',
     'https://*.up.railway.app',
     'http://127.0.0.1:8000',
+    'http://127.0.0.1:8000',
     'http://localhost:8000'
 ]
+
+# Security settings for Railway (HTTPS)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
